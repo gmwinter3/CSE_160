@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change a point color</title>
+
+    <style>
+      img {
+          transform: rotate(-90deg); /* Rotate the image 90 degrees counterclockwise */
+          width: 400px;
+          height: 400px;
+      }
+  </style>
+  </head>
+
+  <body onload="main()">
+    <canvas id="cnv1" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+    <img src="IMG_8796.jpg" alt="turtle drawing" width="400" height="400">
+
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="Point.js"></script>
+    <script src="Triangle.js"></script>   
+    <script src="Circle.js"></script>
+    <script src="LineStrip.js"></script>
+    <script src="asg1.js"></script>
+
+    <br><br>
+        <button type="button" id="clearCanvas">Clear</button>
+        <button type="button" id="undo">Undo</button>
+        <button type="button" id="drawImage">Draw Image</button>
+
+        <br><br>
+		<label for="drawingMode">Drawing Mode:</label>
+
+		<br><br>
+    <button type="button" id="squareButton">Squares</button>
+    <button type="button" id="triangleButton">Triangles</button>
+    <button type="button" id="circleButton">Circles</button>
+    <button type="button" id="lineButton">Lines</button>
+
+        <br><br>
+		<label for="shapeColor">Shape Color:</label>
+
+		<br><br>
+		<label for="red">Red</label>
+		<input type="range" min="0" max ="100" value="100" class="slider" id="redSlider">
+
+        <label for="green">Green</label>
+		<input type="range" min="0" max ="100" value="100" class="slider" id="greenSlider">
+
+        <label for="blue">Blue</label>
+		<input type="range" min="0" max ="100" value="100" class="slider" id="blueSlider">
+
+        <br><br>
+        <label for="shapeSize">Shape Size:</label>
+		<input type="range" min="5" max ="40" value="0" class="slider" id="sizeSlider">
+
+        <label for="circlesSegmentCount">(Circles) Segment Count:</label>
+        <input type="range" min="10" max ="100" value="10" class="slider" id="circleSegmentSlider">
+
+		<br><br>
+    <button type="button" id="draw">Draw</button>
+
+	</body>
+</html> 
