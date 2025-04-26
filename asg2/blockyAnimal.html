@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Change a point color</title>
+
+    <style>
+      img {
+          transform: rotate(-90deg); /* Rotate the image 90 degrees counterclockwise */
+          width: 400px;
+          height: 400px;
+      }
+  </style>
+  </head>
+
+  <body onload="main()">
+    <canvas id="cnv1" width="400" height="400">
+    Please use a browser that supports "canvas"
+    </canvas>
+    <p id="numdot"> XXX </p>
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="Point.js"></script>
+    <script src="Triangle.js"></script>   
+    <script src="Circle.js"></script>
+    <script src="Cube.js"></script>
+    <script src="Sphere.js"></script>
+    <script src="blockyAnimal.js"></script>
+
+		<label for="animationOn/Off">Animation:</label>
+    <button type="button" id="animationOn">On</button>
+    <button type="button" id="animationOff">Off</button>
+
+
+        <br><br>
+        <label for="armSlider">Flipper:</label>
+        <input type="range" min="195" max ="360" value="205" class="slider" id="armSlider">
+
+        <br><br>
+        <label for="headSlider">Head:</label>
+        <input type="range" min="-45" max ="45" value="0" class="slider" id="headSlider">
+
+        <br><br>
+        <label for="bodySlider">Body:</label>
+        <input type="range" min="-45" max ="45" value="0" class="slider" id="bodySlider">
+
+		<br><br>
+    <button type="button" id="draw">Draw</button>
+
+	</body>
+</html> 
