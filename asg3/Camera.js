@@ -15,8 +15,8 @@ class Camera {
   
     constructor() {
       this.fov = 60;
-      this.eye = new Vector3([0, 3, 0]);     // Camera position at origin
-      this.at = new Vector3([0, 0, -1]);     // Looking straight ahead in -Z direction      
+      this.eye = new Vector3([32, 4.5, 32]);  // Center of floor, slightly above it
+      this.at  = new Vector3([16, 4.5, 15]);  // Looking down -Z
       this.up = new Vector3([0, 1, 0]);
   
       this.viewMatrix = new Matrix4();

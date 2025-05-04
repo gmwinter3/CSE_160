@@ -152,14 +152,14 @@ var world = [
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 4, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 3, 3, 3, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 2, 2, 2, 2, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+    [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
     [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
@@ -176,20 +176,29 @@ var world = [
 ];
 
 function initShapes() {
-  // iterate over every grid cell
   for (let x = 0; x < world.length; x++) {
-      for (let z = 0; z < world[x].length; z++) {
-          const height = world[x][z];
+    for (let z = 0; z < world[x].length; z++) {
+      const height = world[x][z];
+      for (let y = 0; y < height; y++) {
+        const cube = new Cube();
+        cube.matrix.translate(x, y + 4, z);
 
-          // for each level 0…height−1, create one cube
-          for (let y = 0; y < height; y++) {
-              const cube = new Cube();  // Create new cube each time
-              cube.matrix.translate(x, y, z);
-              cube.renderfaster();
-          }
+                // Set color based on height (y)
+        if (y === 0) {
+          cube.color = [0.6, 0.3, 0.2, 1.0];  // base layer
+        } else if (y === 1) {
+          cube.color = [0.3, 0.6, 0.2, 1.0];  // middle
+        } else if (y === 2) {
+          cube.color = [0.2, 0.3, 0.6, 1.0];  // higher
+        } else {
+          cube.color = [0.8, 0.8, 0.2, 1.0];  // very high
+        }
+        shapes.push(cube);  // <-- store cube for later rendering
       }
+    }
   }
 }
+
 
   
 
@@ -238,18 +247,22 @@ function renderAllShapes() {
     .setPerspective(90, canvas.width/canvas.height, 0.1, 100);
   gl.uniformMatrix4fv(u_ProjectionMatrix, false, projMat.elements);
 
-// DRAW FLOOR (32x32 flat cube)
-var floor = new Cube();
-floor.color  = [0.5, 0.5, 0.5, 1.0];
-floor.matrix = new Matrix4()
-  .translate(0, 4, 0)
-  .scale(32,  0.02,  32);
-floor.renderfaster();
+  // DRAW FLOOR (32x32 flat cube)
+  var floor = new Cube();
+  floor.color  = [0.5, 0.5, 0.5, 1.0];
+  floor.matrix = new Matrix4()
+    .translate(0, 4, 0)
+    .scale(32,  0.02,  32);
+  floor.renderfaster();
 
-// DRAW SKY CUBE (large blue cube)
-var sky = new Cube();
-sky.color  = [0.0, 0.0, 1.0, 1.0];
-sky.matrix = new Matrix4()
-  .scale(50, 50, 50);
-sky.renderfaster();
+  // DRAW SKY CUBE (large blue cube)
+  var sky = new Cube();
+  sky.color  = [0.0, 0.0, 1.0, 1.0];
+  sky.matrix = new Matrix4()
+    .scale(80, 80, 80);
+  sky.renderfaster();
+
+  for (let shape of shapes) {
+    shape.renderfaster();
+  }
 }
