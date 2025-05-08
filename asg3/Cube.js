@@ -6,6 +6,8 @@ class Cube{
 //        this.size = 5.0;
 //        this.segments = g_circleSegments;
         this.matrix = new Matrix4();
+        this.useTexture = false;
+        this.textureNum = 10; // Default to not using texture
 
         this.cubeVerts = [
                 // Front
@@ -43,32 +45,39 @@ class Cube{
         // Pass the matrix to uModelMatrix attribute
         gl.uniformMatrix4fv(u_ModelMatrix, false, this.matrix.elements);
 
-        // Front face
-        drawTriangle3D([0, 0, 0,  1, 1, 0,  1, 0, 0]);
-        drawTriangle3D([0, 0, 0,  0, 1, 0,  1, 1, 0]);
+        // Determine if this cube should use a texture
+        if (this.useTexture) {
+                gl.uniform1i(u_UseTexture, this.textureNum);
+        } else {
+                gl.uniform1i(u_UseTexture, 0); // Don't use texture
+        }
 
-        // Back face (full color like front)
-        drawTriangle3D([0, 0, 1,  1, 0, 1,  1, 1, 1]);
-        drawTriangle3D([0, 0, 1,  1, 1, 1,  0, 1, 1]);
+        // Front face
+        drawTriangle3DUV([0, 0, 0,  1, 1, 0,  1, 0, 0], [0,0, 1,1, 1,0]);
+        drawTriangle3DUV([0, 0, 0,  0, 1, 0,  1, 1, 0], [0,0, 0,1, 1,1]);
+      
+        // Back face
+        drawTriangle3DUV([0, 0, 1,  1, 0, 1,  1, 1, 1], [1,0, 0,0, 0,1]);
+        drawTriangle3DUV([0, 0, 1,  1, 1, 1,  0, 1, 1], [1,0, 0,1, 1,0]);      
 
         // Slightly darker color for shaded faces
         // gl.uniform4f(u_FragColor, rgba[0]*.9, rgba[1]*.9, rgba[2]*.9, rgba[3]);
 
-        // Top face (already in your code)
-        drawTriangle3D([0, 1, 0,  0, 1, 1,  1, 1, 1]);
-        drawTriangle3D([0, 1, 0,  1, 1, 1,  1, 1, 0]);
-
+        // Top face
+        drawTriangle3DUV([0, 1, 0,  0, 1, 1,  1, 1, 1], [0,0, 0,1, 1,1]);
+        drawTriangle3DUV([0, 1, 0,  1, 1, 1,  1, 1, 0], [0,0, 1,1, 1,0]);
+      
         // Bottom face
-        drawTriangle3D([0, 0, 0,  1, 0, 1,  1, 0, 0]);
-        drawTriangle3D([0, 0, 0,  0, 0, 1,  1, 0, 1]);
-
+        drawTriangle3DUV([0, 0, 0,  1, 0, 1,  1, 0, 0], [0,0, 1,1, 1,0]);
+        drawTriangle3DUV([0, 0, 0,  0, 0, 1,  1, 0, 1], [0,0, 0,1, 1,1]);
+      
         // Left face
-        drawTriangle3D([0, 0, 0,  0, 1, 0,  0, 1, 1]);
-        drawTriangle3D([0, 0, 0,  0, 1, 1,  0, 0, 1]);
-
+        drawTriangle3DUV([0, 0, 0,  0, 1, 0,  0, 1, 1], [0,0, 0,1, 1,1]);
+        drawTriangle3DUV([0, 0, 0,  0, 1, 1,  0, 0, 1], [0,0, 1,1, 0,1]);
+      
         // Right face
-        drawTriangle3D([1, 0, 0,  1, 1, 1,  1, 1, 0]);
-        drawTriangle3D([1, 0, 0,  1, 0, 1,  1, 1, 1]);
+        drawTriangle3DUV([1, 0, 0,  1, 1, 1,  1, 1, 0], [1,0, 1,1, 0,1]);
+        drawTriangle3DUV([1, 0, 0,  1, 0, 1,  1, 1, 1], [1,0, 0,1 , 1,1]);
     }
 
     renderFast() {
@@ -125,42 +134,4 @@ class Cube{
 
         gl.drawArrays(gl.TRIANGLES, 0, 36);
     }
-
-    renderTexturedFaceOnly() {
-        let uv = [
-            0, 0,   1, 1,   1, 0,
-            0, 0,   0, 1,   1, 1
-        ];
-    
-        let positions = [
-            0, 0, 0,   1, 1, 0,   1, 0, 0,
-            0, 0, 0,   0, 1, 0,   1, 1, 0
-        ];
-    
-        let vertices = [];
-        for (let i = 0; i < 6; i++) {
-            vertices.push(
-                positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2],
-                uv[i * 2], uv[i * 2 + 1]
-            );
-        }
-    
-        const FSIZE = Float32Array.BYTES_PER_ELEMENT;
-        const vertexData = new Float32Array(vertices);
-    
-        const buffer = gl.createBuffer();
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, vertexData, gl.STATIC_DRAW);
-    
-        gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
-        gl.enableVertexAttribArray(a_Position);
-    
-        gl.vertexAttribPointer(a_UV, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
-        gl.enableVertexAttribArray(a_UV);
-    
-        gl.uniformMatrix4fv(u_ModelMatrix, false, this.matrix.elements);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-    }
-    
-    
 }
