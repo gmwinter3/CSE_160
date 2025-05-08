@@ -53,6 +53,8 @@ let u_Sampler2;
 let u_Sampler3;
 let u_UseTexture;
 
+let floorCube, skyCube;
+
 
 let eyeX = 0, eyeY = 4, eyeZ = 20;
 let atX  = 0, atY  = 4, atZ  =  0;
@@ -147,8 +149,9 @@ function connectVariablesToGLSL() {
 // -------------------------------------------------------------------- setupWebGL --------------------------------------------------------------------------------
 function setupWebGL() {
     canvas = document.getElementById('cnv1');
-    gl     = getWebGLContext(canvas);
+    gl     = getWebGLContext(canvas, { antialias: false });
     gl.enable(gl.DEPTH_TEST);
+
   
     // Create our camera
     camera = new Camera(45, canvas.width / canvas.height, 1, 100);
@@ -190,17 +193,16 @@ function initTextures(gl, n) {
   image2.onload = function(){ sendImageToTEXTURE2(image2); };
   // Tell the browser to load an image
   image2.src = 'opal_night.jpg';
-  return true;
 
-  var image2 = new Image();  // Create the image object
-  if (!image2) {
+  var image3 = new Image();  // Create the image object
+  if (!image3) {
     console.log('Failed to create the image object');
     return false;
   }
   // Register the event handler to be called on loading an image
-  image2.onload = function(){ sendImageToTEXTURE0(image2); };
+  image3.onload = function(){ sendImageToTEXTURE3(image3); };
   // Tell the browser to load an image
-  image2.src = 'opal.jpg';
+  image3.src = 'opal.jpg';
   return true;
 }
 
@@ -252,15 +254,51 @@ function sendImageToTEXTURE2(image) {
   console.log("Finished loading sky texture into TEXTURE1");
 }
 
+function sendImageToTEXTURE3(image) {
+  let texture = gl.createTexture();
+  if (!texture) {
+    console.log('Failed to create the texture object for sky');
+    return false;
+  }
+
+  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);
+  gl.activeTexture(gl.TEXTURE3);
+  gl.bindTexture(gl.TEXTURE_2D, texture);
+
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+
+  gl.uniform1i(u_Sampler3, 3);
+
+  console.log("Finished loading opal wall texture into TEXTURE3");
+}
+
 
 // -------------------------------------------------------------------- initShapes --------------------------------------------------------------------------------
 function initShapes() {
+    // DRAW FLOOR (32x32 flat cube)
+    floorCube = new Cube();
+    floorCube.useTexture = true; // Use the grass texture
+    floorCube.textureNum = 1;
+    floorCube.matrix = new Matrix4()
+      .translate(0, 0, 0)
+      .scale(32,  0.02,  32);
+
+    // DRAW SKY CUBE (large blue cube)
+    skyCube = new Cube();
+    skyCube.color  = [0.0, 0.0, 1.0, 1.0];
+    skyCube.useTexture = true;
+    skyCube.textureNum = 2;
+    skyCube.matrix = new Matrix4()
+      .translate(-25, -25, -25)
+      .scale(80, 80, 80);
+
   for (let x = 0; x < world.length; x++) {
     for (let z = 0; z < world[x].length; z++) {
       const height = world[x][z];
       for (let y = 0; y < height; y++) {
         const cube = new Cube();
-        cube.matrix.translate(x, y + 4, z);
+        cube.matrix.translate(x, y, z);
 
                 // Set color based on height (y)
         if (y === 0) {
@@ -341,7 +379,7 @@ function tick() {
   lastTime = now;
 
   // Log to console
-  console.log(`Frame time: ${(dt * 1000).toFixed(2)} ms`);
+  // console.log(`Frame time: ${(dt * 1000).toFixed(2)} ms`);
 
   // Update HTML
   frames++;
@@ -365,8 +403,8 @@ function tick() {
 
 // -------------------------------------------------------------------- renderAllShapes --------------------------------------------------------------------------------
 function renderAllShapes() {
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.uniformMatrix4fv(u_GlobalRotateMatrix, false, globalRotMat.elements);
   
   // Use camera's view matrix
   var viewMat = camera.getViewMatrix();
@@ -377,30 +415,20 @@ function renderAllShapes() {
     .setPerspective(90, canvas.width/canvas.height, 0.1, 100);
   gl.uniformMatrix4fv(u_ProjectionMatrix, false, projMat.elements);
 
-  // DRAW FLOOR (32x32 flat cube)
-  var floor = new Cube();
-  //floor.color  = [0.5, 0.5, 0.5, 1.0];
-  floor.useTexture = true; // Use the grass texture
-  floor.textureNum = 1;
-  floor.matrix = new Matrix4()
-    .translate(0, 0, 0)
-    .scale(32,  0.02,  32);
-  floor.render();
+  Cube.initVertexBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, _cubeVBO);
 
-  // DRAW SKY CUBE (large blue cube)
-  var sky = new Cube();
-  sky.color  = [0.0, 0.0, 1.0, 1.0];
-  sky.useTexture = true;
-  sky.textureNum = 2;
-  sky.matrix = new Matrix4()
-    .translate(-25, -25, -25)
-    .scale(80, 80, 80);
-  sky.render();
+  floorCube.renderfaster();
+  skyCube.renderfaster();
 
-  /*
+  gl.uniform1i(u_UseTexture, 3);
   for (let shape of shapes) {
-  shape.useTexture = false;
-    shape.renderfaster();
+    gl.uniform4f(u_FragColor,
+      shape.color[0], shape.color[1],
+      shape.color[2], shape.color[3]
+    );
+    gl.uniformMatrix4fv(u_ModelMatrix, false, shape.matrix.elements);
+    gl.drawArrays(gl.TRIANGLES, 0, 36);
   }
-  */
+
 }

@@ -15,13 +15,14 @@ class Camera {
 
   constructor() {
     this.fov = 60;
-    this.eye = new Vector3([32, 4.5, 32]);  // Center of floor, slightly above it
+    this.eye = new Vector3([16, 6, 16]);  // Center of floor, slightly above it
     this.at  = new Vector3([16, 4.5, 15]);  // Looking down -Z
     this.up = new Vector3([0, 1, 0]);
 
     this.viewMatrix = new Matrix4();
     this.projectionMatrix = new Matrix4();
     this.mouseSensitivity = 0.1;
+    this.turnSpeed = 45.0;
     this.movementSpeed = 10.0;
 
     this.setView();
@@ -117,6 +118,16 @@ class Camera {
     if (keys['d']) this.move(velocity, Camera.DIRECTIONS.RIGHT);
     if (keys[' ']) this.move(velocity, Camera.DIRECTIONS.UP);         
     if (keys['shift']) this.move(velocity, Camera.DIRECTIONS.DOWN);
+
+    // Rotate camera left/right with Q/E
+    if (keys['q']) {
+      this.yaw -= this.turnSpeed * dt;
+      this.updateFront();
+    }
+    if (keys['e']) {
+      this.yaw += this.turnSpeed * dt;
+      this.updateFront();
+    }
   }
 
   processMouseMovement(dx, dy) {

@@ -1,4 +1,28 @@
+let _cubeVBO = null;
+
 class Cube{
+
+    static initVertexBuffer() {
+        if (_cubeVBO) return; // already initialized
+
+        // Build a temporary cube instance to generate cubeVertsUV32
+        const temp = new Cube();
+        const data = temp.cubeVertsUV32;
+
+        // Create, bind, and upload the static VBO
+        _cubeVBO = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, _cubeVBO);
+        gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
+
+        const FSIZE = data.BYTES_PER_ELEMENT;
+        // Position attribute (3 floats)
+        gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 5, 0);
+        gl.enableVertexAttribArray(a_Position);
+        // UV attribute (2 floats)
+        gl.vertexAttribPointer(a_UV, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 3);
+        gl.enableVertexAttribArray(a_UV);
+    }
+
     constructor(){
         this.type = 'cube';
 //        this.position = [0.0, 0.0, 0.0];
@@ -30,7 +54,37 @@ class Cube{
                 1, 0, 0,  1, 0, 1,  1, 1, 1
             ];
 
-            this.cubeVerts32 = new Float32Array(this.cubeVerts);
+            this.cubeUVs = [
+                // Front
+                0,0,  1,1,  1,0,
+                0,0,  0,1,  1,1,
+                // Back
+                1,0,  0,0,  0,1,
+                1,0,  0,1,  0,0,
+                // Top
+                0,0,  0,1,  1,1,
+                0,0,  1,1,  1,0,
+                // Bottom
+                0,0,  1,1,  1,0,
+                0,0,  0,1,  1,1,
+                // Left
+                0,0,  0,1,  1,1,
+                0,0,  1,1,  0,1,
+                // Right
+                1,0,  1,1,  0,1,
+                1,0,  0,1,  1,1
+              ];
+
+              const verts = this.cubeVerts, uvs = this.cubeUVs;
+              const interleaved = new Float32Array(36 * 5);
+              for (let i = 0; i < 36; i++) {
+                interleaved[i*5 + 0] = verts[i*3 + 0];
+                interleaved[i*5 + 1] = verts[i*3 + 1];
+                interleaved[i*5 + 2] = verts[i*3 + 2];
+                interleaved[i*5 + 3] = uvs[i*2  + 0];
+                interleaved[i*5 + 4] = uvs[i*2  + 1];
+              }
+              this.cubeVertsUV32 = interleaved;
 
     }
 
@@ -116,22 +170,21 @@ class Cube{
 
 
     renderfaster() {
-        var rgba = this.color;
+        // One-time VBO upload & attrib setup
+        Cube.initVertexBuffer();
+        // Bind before drawing (attribute state already points at _cubeVBO)
+        gl.bindBuffer(gl.ARRAY_BUFFER, _cubeVBO);
 
-        //gl.uniform1i(u_whichTexture, -2);
-
-        // Pass the color of a point to u_FragColor variable
-        gl.uniform4f(u_FragColor, rgba[0], rgba[1], rgba[2], rgba[3]);
-
-        // Pass the matrix to uModelMatrix attribute
+        // Pass uniforms
+        gl.uniform1i(u_UseTexture, this.textureNum);
+        gl.uniform4f(
+            u_FragColor,
+            this.color[0], this.color[1],
+            this.color[2], this.color[3]
+        );
         gl.uniformMatrix4fv(u_ModelMatrix, false, this.matrix.elements);
 
-        if (g_vertexBuffer == null) {
-                initTriangle3D();
-        }
-
-        gl.bufferData(gl.ARRAY_BUFFER, this.cubeVerts32, gl.DYNAMIC_DRAW);
-
+        // Single draw call for the whole cube
         gl.drawArrays(gl.TRIANGLES, 0, 36);
     }
 }
