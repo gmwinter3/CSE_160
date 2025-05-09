@@ -15,7 +15,7 @@ class Camera {
 
   constructor() {
     this.fov = 60;
-    this.eye = new Vector3([16, 6, 16]);  // Center of floor, slightly above it
+    this.eye = new Vector3([12, 2, 12]);  // Center of floor, slightly above it
     this.at  = new Vector3([16, 4.5, 15]);  // Looking down -Z
     this.up = new Vector3([0, 1, 0]);
 
@@ -34,7 +34,7 @@ class Camera {
   }
 
   resetPerspective() {
-    this.projectionMatrix.setPerspective(this.fov, canvas.width / canvas.height, 0.1, 1000);
+    this.projectionMatrix.setPerspective(90, canvas.width/canvas.height, 0.1, 100);
   }
 
   setView() {

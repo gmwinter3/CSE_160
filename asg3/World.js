@@ -273,6 +273,30 @@ function sendImageToTEXTURE3(image) {
   console.log("Finished loading opal wall texture into TEXTURE3");
 }
 
+// convert hue [0–360], sat [0–1], light [0–1] → [r,g,b]
+function hslToRgb(h, s, l) {
+  h /= 360;
+  let r, g, b;
+  if (s === 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1/3);
+  }
+  return [r, g, b];
+}
+
 
 // -------------------------------------------------------------------- initShapes --------------------------------------------------------------------------------
 function initShapes() {
@@ -313,6 +337,30 @@ function initShapes() {
         shapes.push(cube);  // <-- store cube for later rendering
       }
     }
+  }
+
+  // ── Rainbow spiral from pyramid apex ──
+  const apexX = 14 + 0.5;   // center X of your pyramid top
+  const apexY = 4;          // height of pyramid
+  const apexZ = 14 + 0.5;   // center Z of your pyramid top
+  const spiralHeight = 10;  
+  const spiralRadius = 2;   // how far out the spiral winds
+
+  for (let i = 0; i < spiralHeight; i++) {
+    const angle = i * 2 * Math.PI / spiralHeight;
+    const x = apexX + Math.cos(angle) * spiralRadius;
+    const y = apexY + i;    // stack one cube per level
+    const z = apexZ + Math.sin(angle) * spiralRadius;
+
+    const cube = new Cube();
+    cube.isRainbow = true; 
+    cube.matrix = new Matrix4().translate(x, y, z);
+
+    // pick a rainbow color by cycling hue 0→360
+    const [r, g, b] = hslToRgb(i * 360 / spiralHeight, 1, 0.5);
+    cube.color = [r, g, b, 1.0];
+
+    shapes.push(cube);
   }
 }
 
@@ -423,6 +471,19 @@ function renderAllShapes() {
 
   gl.uniform1i(u_UseTexture, 3);
   for (let shape of shapes) {
+    if (shape.isRainbow) continue;
+    gl.uniform4f(u_FragColor,
+      shape.color[0], shape.color[1],
+      shape.color[2], shape.color[3]
+    );
+    gl.uniformMatrix4fv(u_ModelMatrix, false, shape.matrix.elements);
+    gl.drawArrays(gl.TRIANGLES, 0, 36);
+  }
+
+  // 2) draw *untextured* rainbow cubes
+  gl.uniform1i(u_UseTexture, 0);
+  for (let shape of shapes) {
+    if (!shape.isRainbow) continue;
     gl.uniform4f(u_FragColor,
       shape.color[0], shape.color[1],
       shape.color[2], shape.color[3]

@@ -4,11 +4,38 @@
   <head>
     <meta charset="utf-8" />
     <title>World</title>
+
+    <style>
+      body { margin: 0; overflow: hidden; font-family: sans-serif; }
+      #controls {
+        /* Position controls below the FPS counter */
+        position: static;
+        margin: 10px 10px 0 10px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        border-radius: 5px;
+        max-width: 250px;
+      }
+      #story {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 450px;
+        max-height: 60%;
+        overflow-y: auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        border-radius: 5px;
+      }
+      #story h3 { margin-top: 0; }
+      label { display: block; margin: 5px 0; }
+    </style>
   </head>
+
 
   <body onload="main()">
     <canvas id="cnv1" width="900" height="500">
-    Please use a browser that supports "canvas"
+      Please use a browser that supports "canvas"
     </canvas>
     <p id="numdot"> XXX </p>
 
@@ -22,6 +49,21 @@
     <script src="Camera.js"></script>
     <script src="World.js"></script>
 
+    <div id="controls">
+      <h3>Controls</h3>
+      <p><strong>Camera:</strong> Use Q/E to rotate or use the mouse</p>
+      <p><strong>Movement:</strong> Use WASD for movement as well as space to go up and ctl to go down</p>
 
-	</body>
-</html> 
+    </div>
+    
+    <section id="story">
+      <h3>Story of the The Spiral at the Heart of the Vale</h3>
+      <p>Long ago, nestled in a vast emerald valley encased by opalescent walls, there stood a quiet land known as The Hollow Vale. A beutiful valley shrouded in eternal night with</p>
+      <p>Centuries ago, at the center of the vale, ancient builders carved a magnificent stepped pyramid of glistening opal.</p>
+      <p>One day a rainbow spiral erupted from the pyramid’s summit, reaching towards the heavens. The colors climbed higher and higher, drawing awe from every corner of the Vale.</p>
+      <p>It was said that the Spiral served as a beacon drawing travellers from far and wide to the Vale in hopes one could return the light to the valley.</p>
+      <p></p>
+    </section>
+
+  </body>
+</html>

@@ -1,5 +1,5 @@
 class Sphere {
-    constructor(segments = 12) {
+    constructor(segments = 5) {
         this.type = 'sphere';
         this.color = [1.0, 1.0, 1.0, 1.0];
         this.matrix = new Matrix4();
