@@ -263,7 +263,7 @@ function main() {
   });
   }
   
-  texLoader.setPath('/3d/statue_v1/');
+  texLoader.setPath('3d/statue_v1/');
 
   const diffuseMap  = texLoader.load('12349_Statue_diff.jpg');
   const specularMap = texLoader.load('12349_Statue_spec.jpg');
