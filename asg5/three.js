@@ -21,7 +21,7 @@ function main() {
 
   const materials = Array(6).fill().map(() => new THREE.MeshBasicMaterial({
     map: faceTexture,
-    side: THREE.BackSide // So texture is visible from inside the cube
+    side: THREE.BackSide // texture is visible from inside the cube
   }));
 
   const skyCube = new THREE.Mesh(
@@ -46,7 +46,7 @@ function main() {
   scene.add(platform);
 
   // Pyramid
-  const marbleTex = new THREE.TextureLoader().load('textures/marble.jpg');  // Update path if needed
+  const marbleTex = new THREE.TextureLoader().load('textures/marble.jpg');
 
   const pyramidGeometry = new THREE.ConeGeometry(10, 10, 4);
   const pyramidMaterial = new THREE.MeshPhongMaterial({ map: marbleTex });
@@ -61,13 +61,13 @@ function main() {
   const dodecaGeometry = new THREE.DodecahedronGeometry(1);
   const dodecaMaterial = new THREE.MeshPhongMaterial({ color: 0x00ffcc, shininess: 100 });
   const dodeca = new THREE.Mesh(dodecaGeometry, dodecaMaterial);
-  dodeca.position.set(0, 9, 0); // Slightly above the 5-unit tall pyramid
+  dodeca.position.set(0, 9, 0);
   dodeca.castShadow = true;
   dodeca.receiveShadow = true;
   scene.add(dodeca);
 
   // ice cube ------------------------------------------------------------------------------------------------------------------------
-  // git the textures for this from https://threejs.org/examples/webgpu_parallax_uv.html
+  // got the textures for this from https://threejs.org/examples/webgpu_parallax_uv.html
   const texLoader = new THREE.TextureLoader();
   const iceColorMap = texLoader.load('textures/Ice002_1K-JPG_Color.jpg');
   const iceNormalMap = texLoader.load('textures/Ice002_1K-JPG_NormalGL.jpg');
@@ -81,7 +81,7 @@ function main() {
   iceRoughnessMap.encoding = THREE.LinearEncoding;
   iceDisplacementMap.encoding = THREE.LinearEncoding;
   
-  const cubeGeometry = new THREE.BoxGeometry(5, 5, 5, 256, 256, 256);  // more segments for displacement
+  const cubeGeometry = new THREE.BoxGeometry(5, 5, 5, 256, 256, 256);
   const cubeMaterial1 = new THREE.MeshStandardMaterial({
     map: iceColorMap,
     normalMap: iceNormalMap,
@@ -138,7 +138,7 @@ function main() {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   });
   
-  const waterMeshes = []; // Add this at the top near other globals
+  const waterMeshes = [];
 
   function createWaterPool(x, z, width, depth) {
     const geometry = new THREE.PlaneGeometry(width, depth);
@@ -271,10 +271,10 @@ function main() {
   const specularMap = texLoader.load('12349_Statue_spec.jpg');
 
   const statueMat = new THREE.MeshPhongMaterial({
-    map:         diffuseMap,    // your color texture
-    specularMap: specularMap,   // your highlight‐control texture
-    specular:    0x888888,      // base specular color (tint)
-    shininess:   30             // how tight the highlights are
+    map:         diffuseMap,    
+    specularMap: specularMap,
+    specular:    0x888888,   
+    shininess:   30      
   });
 
   {
@@ -301,7 +301,6 @@ function main() {
 
   const pillarMaterial = new THREE.MeshStandardMaterial({ map: marblePillarTexture });
 
-  // Function to create one pillar
   function createPillar(x, z) {
     const group = new THREE.Group();
 
@@ -330,17 +329,15 @@ function main() {
     beam2.receiveShadow = true;
     group.add(beam2);
 
-    group.position.set(x, 5, z); // Positioned on top of the platform (Y = 5 for 10 unit height)
+    group.position.set(x, 5, z);
     scene.add(group);
   }
 
-  // Add pillars at each pyramid corner (rotated 45 deg, base ~10 wide)
-  const offset = 7; // Distance from center to corner (half base width of pyramid)
-  createPillar(-offset, -offset); // back left
-  createPillar(offset, -offset);  // back right
-  createPillar(offset, offset);   // front right
-  createPillar(-offset, offset);  // front left
-
+  const offset = 7;
+  createPillar(-offset, -offset);
+  createPillar(offset, -offset);
+  createPillar(offset, offset); 
+  createPillar(-offset, offset);
 
   // Pointer Lock Controls ------------------------------------------------------------------------------------------------------------------------
   const controls = new PointerLockControls(camera, document.body);
@@ -390,8 +387,8 @@ function main() {
 
   // Directional light ----------------------------------------------------------------
   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.1);
-  directionalLight.position.set(0, 10, 0); // Light is above looking down
-  directionalLight.target.position.set(0, 0, 0); // Aim at center
+  directionalLight.position.set(0, 10, 0);
+  directionalLight.target.position.set(0, 0, 0);
   scene.add(directionalLight);
   scene.add(directionalLight.target);
 
