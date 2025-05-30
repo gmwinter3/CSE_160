@@ -1,8 +1,9 @@
 import * as THREE from 'three';
-import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls';
-import { ParametricGeometry } from 'three/examples/jsm/geometries/ParametricGeometry.js';
-import {OBJLoader} from 'three/addons/loaders/OBJLoader.js';
+import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+import { ParametricGeometry } from 'three/addons/geometries/ParametricGeometry.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { Water } from 'three/addons/objects/Water.js';
+
 
 
 function main() {
