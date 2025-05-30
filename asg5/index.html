@@ -2,9 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Three.js</title>
-      <style>
-        html, body {
+    <title>Three.js Project</title>
+    <style>
+      html, body {
         margin: 0;
         padding: 0;
         width: 100%;
@@ -13,25 +13,25 @@
       }
       canvas {
         display: block;
-        width: 50%;
-        height: 50%;
-     }
-</style>
+        width: 100%;
+        height: 100%;
+      }
+    </style>
 
+    <!-- Import map for Three.js modules -->
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.176.0/examples/jsm/"
+      }
+    }
+    </script>
+
+    <!-- Your main JS file using Three.js -->
+    <script type="module" src="three.js"></script>
   </head>
   <body>
-<body>
-  <canvas id="c"></canvas>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.176.0/examples/jsm/"
-  }
-}
-</script>
-
-<script type="module" src="three.js"></script>
-</body>
+    <canvas id="c"></canvas>
   </body>
 </html>
