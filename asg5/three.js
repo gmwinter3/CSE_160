@@ -67,6 +67,7 @@ function main() {
   scene.add(dodeca);
 
   // ice cube ------------------------------------------------------------------------------------------------------------------------
+  // git the textures for this from https://threejs.org/examples/webgpu_parallax_uv.html
   const texLoader = new THREE.TextureLoader();
   const iceColorMap = texLoader.load('textures/Ice002_1K-JPG_Color.jpg');
   const iceNormalMap = texLoader.load('textures/Ice002_1K-JPG_NormalGL.jpg');
@@ -132,6 +133,7 @@ function main() {
   scene.add(iceCube3);
 
   // pools ------------------------------------------------------------------------------------------------------------------------
+  // implemented based on the following link and used the smae waternormals.jpg https://threejs.org/examples/webgl_shaders_ocean.html
   const waterNormals = new THREE.TextureLoader().load('textures/waternormals.jpg', texture => {
     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
   });
@@ -407,6 +409,7 @@ function main() {
   scene.add(dirLightHelper);
 
   // statue spotlight ----------------------------------------------------------------
+  // Copied this idea from the following link and used the same marble image to project https://threejs.org/examples/webgl_lights_spotlight.html
   const spotlightPivot = new THREE.Object3D();
   scene.add(spotlightPivot);
 
